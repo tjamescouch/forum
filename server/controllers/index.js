@@ -10,9 +10,6 @@ router.use('/users', users);
 router.use('/posts', posts);
 router.use('/comments', comments);
 
-/* GET home page. */
-router.get('/', function(req, res) {
-  res.send('homepage');
-});
+
 
 module.exports = router;
