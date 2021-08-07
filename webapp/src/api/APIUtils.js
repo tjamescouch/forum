@@ -2,7 +2,7 @@ const API_BASE_URL = 'http://localhost:5000/api'
 
 class APIUtils {
 
-  fetchJson(url) {
+  getJson(url) {
     return fetch(API_BASE_URL + url).then(res => res.json());
   }
 

@@ -17,11 +17,11 @@ class App extends React.Component {
         <body>
           <div className="body-content">
             <Switch>
+              <Route exact path="/">
+                <Posts />
+              </Route>
               <Route path="/post/:id">
                 <Post />
-              </Route>
-              <Route path="/">
-                <Posts />
               </Route>
               <Route path="*">
                 <PageNotFound />

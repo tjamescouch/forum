@@ -3,7 +3,11 @@ import APIUtils from './APIUtils'
 class PostAPI {
 
   getPosts() {
-    return APIUtils.fetchJson('/posts');
+    return APIUtils.getJson('/posts');
+  }
+
+  getPost(id) {
+    return APIUtils.getJson('/posts/' + id);
   }
 }
 
