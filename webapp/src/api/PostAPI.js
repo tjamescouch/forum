@@ -9,6 +9,10 @@ class PostAPI {
   getPost(id) {
     return APIUtils.getJson('/posts/' + id);
   }
+
+  createPost(post) {
+    return APIUtils.postJson('/posts/', post);
+  }
 }
 
 

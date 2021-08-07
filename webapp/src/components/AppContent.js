@@ -12,23 +12,19 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-        </header>
-        <body>
-          <div className="body-content">
-            <Switch>
-              <Route exact path="/">
-                <Posts />
-              </Route>
-              <Route path="/post/:id">
-                <Post />
-              </Route>
-              <Route path="*">
-                <PageNotFound />
-              </Route>
-            </Switch>
-          </div>
-        </body>
+        <div className="App-content">
+          <Switch>
+            <Route exact path="/">
+              <Posts />
+            </Route>
+            <Route path="/post/:id">
+              <Post />
+            </Route>
+            <Route path="*">
+              <PageNotFound />
+            </Route>
+          </Switch>
+        </div>
       </div>
     );
   }

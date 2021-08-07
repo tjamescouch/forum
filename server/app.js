@@ -9,6 +9,7 @@ const controllers = require('./controllers');
 
 const app = express();
 
+//Setup middleware
 app.use(cors());
 app.use(logger('dev'));
 app.use(express.json());
