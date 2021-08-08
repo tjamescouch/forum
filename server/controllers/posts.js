@@ -29,7 +29,13 @@ router.get('/:id', async function(req, res) {
 //Create a post - requires authentication
 router.post('/', passport.authenticate('jwt', { session: false }), async function(req, res) {
   try{
-    let post = req.body;
+    let user = req.user;
+    let bodyJson = req.body;
+    let post = {
+      title: bodyJson.title,
+      body: bodyJson.body,
+      author: user.id,
+    }
     let persistedPost = await Post.create(post);
     res.status(201).json(persistedPost);
   } catch (error) {
