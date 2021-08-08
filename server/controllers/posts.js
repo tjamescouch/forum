@@ -1,6 +1,8 @@
 const express = require('express');
+const passport = require("passport");
 const router = express.Router();
-const Post = require('../models/schema/post.js').Post;
+
+const Post = require('../models/schema/post').Post;
 
 //Get a page of posts
 router.get('/', async function(req, res) {
@@ -25,7 +27,7 @@ router.get('/:id', async function(req, res) {
 });
 
 //Create a post
-router.post('/', async function(req, res) {
+router.post('/', passport.authenticate('jwt', { session: false }), async function(req, res) {
   try{
     let post = req.body;
     let persistedPost = await Post.create(post);

@@ -4,8 +4,10 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const logger = require('morgan');
+const passport = require("passport");
 
 const controllers = require('./controllers');
+const configurePassport = require("./config/passport");
 
 const app = express();
 
@@ -16,6 +18,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(passport.initialize());
+configurePassport(passport);
 
 app.use('/api', controllers);
 

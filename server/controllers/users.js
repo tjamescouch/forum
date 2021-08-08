@@ -3,12 +3,10 @@ const router = express.Router();
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
-const User = require('../models/schema/user.js').User;
+const User = require('../models/schema/user').User;
 
 //User input validators
 const validateRegistrationData = require("../validation/register");
-const validateLoginData = require("../validation/login");
-
 
 
 //Creates a new user
@@ -32,7 +30,9 @@ router.post("/", async function(req, res) {
         password: req.body.password
       });
       // Hash password before saving in database
+      //A Random 'salt' is included before hashing to prevent rainbow table attacks
       let salt = await bcrypt.genSalt(10);
+      //The generated hash also includes the salt so that it can be reproduced at login
       let hash = await bcrypt.hash(newUser.password, salt);
       newUser.password = hash;
       let user = await User.create(newUser);

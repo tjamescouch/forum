@@ -3,13 +3,15 @@ const app = require('./app');
 const http = require('http');
 const mongoose = require('mongoose');
 
+const keys = require('./config/keys');
+
 //Fixes deprecation warnings
 mongoose.set('useNewUrlParser', true);
 mongoose.set('useFindAndModify', false);
 mongoose.set('useCreateIndex', true);
 mongoose.set('useUnifiedTopology', true);
 
-mongoose.connect('mongodb://localhost/forum')
+mongoose.connect(keys.MongoURI)
         .then(() => console.log("MongoDB connected"))
         .catch(err => console.log(err));
 

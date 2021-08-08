@@ -31,6 +31,7 @@ class Posts extends React.Component {
       this.setState({posts})
     } catch (error) {
       console.error(error);
+      alert('An error occurred');
     }
   }
 
@@ -44,7 +45,12 @@ class Posts extends React.Component {
 
   async onClickCreatePost() {
     this.setState({creatingPost:true});
-    await PostAPI.createPost({title: this.state.title, body:this.state.body});
+    try {
+      await PostAPI.createPost({title: this.state.title, body:this.state.body});
+    } catch (error) {
+      console.error(error);
+      alert('An error occurred');
+    }
     this.setState({showPostModal:false, creatingPost: false, title: '', body: ''});
     this.loadData();
   }
