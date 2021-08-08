@@ -9,7 +9,9 @@ mongoose.set('useFindAndModify', false);
 mongoose.set('useCreateIndex', true);
 mongoose.set('useUnifiedTopology', true);
 
-mongoose.connect('mongodb://localhost/forum');
+mongoose.connect('mongodb://localhost/forum')
+        .then(() => console.log("MongoDB connected"))
+        .catch(err => console.log(err));
 
 
 var port = 5000;
