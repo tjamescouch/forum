@@ -3,15 +3,17 @@ const API_BASE_URL = 'http://localhost:5000/api'
 class APIUtils {
 
   fetchJson(url, method, data) {
-    let headers = method === "GET" ? undefined : {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
-    };
-    return fetch(API_BASE_URL + url, {
+    let init = {
       method: method,
-      headers: headers,
       body: JSON.stringify(data)
-    })
+    };
+    if(method!=="GET") {
+      init.headers = {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      };
+    }
+    return fetch(API_BASE_URL + url, init)
       .then(res => {
         if(!res.ok) {
           throw new Error(res.status);
