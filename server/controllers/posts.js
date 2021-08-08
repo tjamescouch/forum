@@ -26,7 +26,7 @@ router.get('/:id', async function(req, res) {
   }
 });
 
-//Create a post
+//Create a post - requires authentication
 router.post('/', passport.authenticate('jwt', { session: false }), async function(req, res) {
   try{
     let post = req.body;
