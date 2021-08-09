@@ -10,8 +10,8 @@ class NavBar extends React.Component {
       <header>
         <ul className="NavBar">
           <li><Link className="NavBar-link home" to="/">Home</Link></li>
-          <li><Link className="NavBar-link" to="login">Sign In</Link></li>
-          <li><Link className="NavBar-link" to="signup">Get Started</Link></li>
+          <li><Link className="NavBar-link" to="/login">Sign In</Link></li>
+          <li><Link className="NavBar-link" to="/signup">Get Started</Link></li>
         </ul>
       </header>
     );
