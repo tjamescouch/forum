@@ -60,12 +60,12 @@ class SignUpContainer extends React.Component {
                             email:this.state.email,
                             password:this.state.password,
                             password2:this.state.password2});
+      this.props.history.push('/login');
     } catch (error) {
       console.error(error);
       alert('An error occurred');
     }
     this.setState({creatingUser: false});
-    this.props.history.push('/login')
   }
 
   onSubmit() {

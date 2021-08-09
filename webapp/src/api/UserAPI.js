@@ -6,7 +6,7 @@ class UserAPI {
     return APIUtils.postJson('/users/', userData);
   }
 
-  login(credentials) {
+  signIn(credentials) {
     return APIUtils.postJson('/users/login', credentials);
   }
 }
