@@ -81,7 +81,7 @@ class Posts extends React.Component {
         <Modal open={this.state.showPostModal} onClose={this.onClickCancelPost}>
           <Modal.Header>Create a Post</Modal.Header>
           <Modal.Content>
-            <Form onSubmit={this.onSubmitPost}>
+            <Form onSubmit={this.onSubmitPost} autoComplete="off">
               <Form.Input name="title" label='Title' placeholder='Enter a title' value={this.state.title} onChange={this.onInputChange} />
               <Form.TextArea name="body" label='Question' placeholder='Write a question' value={this.state.body} onChange={this.onInputChange} />
             </Form>
