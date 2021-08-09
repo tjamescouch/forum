@@ -11,7 +11,8 @@ function SignIn({email,
   return (
     <div className='SignIn'>
       <div />
-      <div className="SignIn-form-wrapper">
+      <div className="SignIn-centerer">
+        <div className="SignIn-form-wrapper">
         <Form onSubmit={onSubmit} autoComplete="off" error>
           <Form.Input name="email" label='Email' placeholder='Enter your email' value={email} onChange={onInputChange} />
           <Form.Input name="password" label='Password' type="password" placeholder='Enter a password' value={password} onChange={onInputChange} />
@@ -25,6 +26,7 @@ function SignIn({email,
           <br />
           <Button>Sign In</Button>
         </Form>
+        </div>
       </div>
       <div />
     </div>

@@ -70,7 +70,7 @@ class Posts extends React.Component {
   render() {
     return (
       <div className='Posts'>
-        <Button size='huge' onClick={this.onClickPost}>Post</Button>
+        <Button className="Posts-post-button" size='huge' onClick={this.onClickPost}>Post</Button>
         <Item.Group>
           {this.state.posts.map(post =>
             <PostItem key={post._id} post={post} />
