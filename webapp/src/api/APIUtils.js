@@ -7,11 +7,22 @@ class APIUtils {
       method: method,
       body: JSON.stringify(data)
     };
+    let headers = {};
     if(method!=="GET") {
-      init.headers = {
+      headers = {
+        ...headers,
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       };
+    }
+    if(localStorage.jwtToken) {
+      headers = {
+        ...headers,
+        'Authorization': localStorage.jwtToken
+      };
+    }
+    if(Object.keys(headers).length > 0) {
+      init.headers = headers;
     }
     return fetch(API_BASE_URL + url, init)
       .then(res => {

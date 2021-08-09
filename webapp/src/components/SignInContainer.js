@@ -40,8 +40,11 @@ class SignInContainer extends React.Component {
     }
     this.setState({loggingIn:true});
     try {
-      await UserAPI.signIn({email:this.state.email,
-                            password:this.state.password});
+      let response = await UserAPI.signIn({email: this.state.email,
+                            password: this.state.password});
+      const { token } = response;
+      localStorage.setItem("jwtToken", token);
+
       this.props.history.push('/');
     } catch (error) {
       console.error(error);
