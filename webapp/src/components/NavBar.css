@@ -1,0 +1,19 @@
+.NavBar {
+  text-align: right;
+  padding: 10px;
+}
+
+.NavBar > li {
+  display: inline-block;
+}
+
+.NavBar-link {
+  padding: 10px;
+  margin: 5px;
+  border: 1px solid rgba(0, 0, 0, 0.7);
+  border-radius: 10px;
+}
+
+.NavBar-link.home {
+  
+}
