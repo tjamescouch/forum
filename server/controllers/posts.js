@@ -7,7 +7,7 @@ const Post = require('../models/schema/post').Post;
 //Get a page of posts
 router.get('/', async function(req, res) {
   try{
-    let posts = await Post.find().sort({date: -1}).limit(50).exec();
+    let posts = await Post.find().sort({date: -1}).limit(50).populate('author', '-password -email').exec();
     res.status(200).json(posts);
   } catch (error) {
     console.error(error);

@@ -1,6 +1,7 @@
 import React from 'react';
 import PostAPI from '../api/PostAPI';
 import { Image, Item, Button, Modal, Input, TextArea, Form, Loader } from 'semantic-ui-react'
+import { connect } from 'react-redux';
 import PostItem from './PostItem'
 import './Posts.css'
 
@@ -70,7 +71,9 @@ class Posts extends React.Component {
   render() {
     return (
       <div className='Posts'>
-        <Button className="Posts-post-button" size='huge' onClick={this.onClickPost}>Post</Button>
+        {this.props.isAuthenticated &&
+          <Button className="Posts-post-button" size='huge' onClick={this.onClickPost}>Post</Button>
+        }
         <Item.Group>
           {this.state.posts.map(post =>
             <PostItem key={post._id} post={post} />
@@ -108,4 +111,8 @@ class Posts extends React.Component {
   }
 }
 
-export default Posts;
+function mapStateToProps(state, ownProps) {
+    return {...state.authentication};
+}
+
+export default connect(mapStateToProps)(Posts);

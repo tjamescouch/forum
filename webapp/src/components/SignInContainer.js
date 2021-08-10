@@ -2,6 +2,8 @@ import React from 'react';
 import UserAPI from '../api/UserAPI';
 import SignIn from './SignIn';
 import { withRouter } from "react-router";
+import { connect } from 'react-redux'
+import { setAuthenticated } from '../actions'
 
 
 class SignInContainer extends React.Component {
@@ -44,14 +46,13 @@ class SignInContainer extends React.Component {
                             password: this.state.password});
       const { token } = response;
       localStorage.setItem("jwtToken", token);
-
+      this.props.setAuthenticated(true);
       this.props.history.push('/');
     } catch (error) {
       console.error(error);
       //FIXME - add better error handling here
       this.setState({error: "Invalid username or password"});
     }
-    this.setState({loggingIn: false});
   }
 
   onSubmit() {
@@ -78,4 +79,4 @@ class SignInContainer extends React.Component {
   }
 }
 
-export default withRouter(SignInContainer);
+export default withRouter(connect(null,{setAuthenticated})(SignInContainer));
