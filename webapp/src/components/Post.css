@@ -53,6 +53,11 @@
   border-radius: 50%;
 }
 
+.Post-comment-avatar-name {
+  font-size: 1em;
+  text-align: center;
+}
+
 .Post-comment-wrapper {
   margin-top: 20px;
   margin-bottom: 20px;
