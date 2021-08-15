@@ -8,7 +8,7 @@ const comments = require('./comments');
 //Attach controllers to routes
 router.use('/users', users);
 router.use('/posts', posts);
-router.use('/comments', comments);
+router.use('/posts/:postId/comments', comments);
 
 
 

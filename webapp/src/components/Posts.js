@@ -72,7 +72,7 @@ class Posts extends React.Component {
     return (
       <div className='Posts'>
         {this.props.isAuthenticated &&
-          <Button className="Posts-post-button" size='huge' onClick={this.onClickPost}>Post</Button>
+          <button className="Posts-post-button" onClick={this.onClickPost}>Post</button>
         }
         <div className="Posts-group">
           {this.state.posts.map(post =>
@@ -101,6 +101,7 @@ class Posts extends React.Component {
                 labelPosition='right'
                 icon='checkmark'
                 onClick={this.onClickCreatePost}
+                disabled={!this.state.title || !this.state.body}
                 positive
               />
             </Modal.Actions>
