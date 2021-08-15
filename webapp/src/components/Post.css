@@ -1,0 +1,13 @@
+.Post-avatar-wrapper {
+  width: 10em;
+}
+
+.Post-avatar-wrapper > img {
+  width: 10em;
+  border-radius: 50%;
+}
+
+.Post-avatar-name {
+  font-size: 1.3em;
+  text-align: center;
+}

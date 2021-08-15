@@ -3,7 +3,7 @@ import { withRouter } from "react-router";
 import PostAPI from '../api/PostAPI';
 import { Image, Item, Message } from 'semantic-ui-react'
 import PostItem from './PostItem';
-
+import './Post.css';
 
 class Post extends React.Component {
 
@@ -24,7 +24,7 @@ class Post extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="Post">
         {this.state.error &&
           <Message negative>
             <Message.Header>Error</Message.Header>
@@ -33,6 +33,10 @@ class Post extends React.Component {
         }
         {this.state.post &&
           <div>
+            <div className="Post-avatar-wrapper">
+              <img src='/default-avatar.jpeg' />
+              <p className="Post-avatar-name" >{this.state.post.author && this.state.post.author.name}</p>
+            </div>
             <h1>{this.state.post.title}</h1>
             <p>{this.state.post.body}</p>
           </div>

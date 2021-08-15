@@ -18,7 +18,7 @@ router.get('/', async function(req, res) {
 //Get one post
 router.get('/:id', async function(req, res) {
   try {
-    let post = await Post.findOne({_id:req.params.id}).exec();
+    let post = await Post.findOne({_id:req.params.id}).populate('author', '-password -email').exec();
     res.status(200).json(post);
   } catch (error) {
     console.error(error);
