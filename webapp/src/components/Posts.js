@@ -74,11 +74,11 @@ class Posts extends React.Component {
         {this.props.isAuthenticated &&
           <Button className="Posts-post-button" size='huge' onClick={this.onClickPost}>Post</Button>
         }
-        <Item.Group>
+        <div className="Posts-group">
           {this.state.posts.map(post =>
             <PostItem key={post._id} post={post} />
           )}
-        </Item.Group>
+        </div>
 
 
         <Modal open={this.state.showPostModal} onClose={this.onClickCancelPost}>

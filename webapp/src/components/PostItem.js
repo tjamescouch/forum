@@ -4,16 +4,16 @@ import { Link } from 'react-router-dom';
 
 function PostItem({post}) {
   return (
-    <Item className="App-forum-post" as={Link} to={`/post/${post._id}`}>
-      <Item.Image size='tiny' src='/logo192.png' />
+    <Link className="Posts-forum-post" to={`/post/${post._id}`}>
+      <img src='/default-avatar.jpeg' />
 
-      <Item.Content>
-        <Item.Header>{post.title}</Item.Header>
-        <Item.Description>
+      <div>
+        <h3>{post.title}</h3>
+        <p>
           {post.body}
-        </Item.Description>
-      </Item.Content>
-    </Item>
+        </p>
+      </div>
+    </Link>
   );
 }
 
