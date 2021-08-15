@@ -6,6 +6,7 @@
 
 
 .Posts-forum-post {
+  color: rgba(0, 0, 0, 1);
   margin-top: 20px;
   margin-bottom: 20px;
   display: block;
@@ -15,12 +16,17 @@
 }
 
 .Posts-forum-post:hover {
+  color: rgba(0, 0, 0, 1);
   box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
 }
 
-.Posts-forum-post > img {
+.Posts-avatar-wrapper > img {
   width: 6em;
   border-radius: 50%;
+}
+
+.Posts-avatar-name {
+  text-align: center;
 }
 
 @media (min-width: 40em) {
@@ -28,8 +34,11 @@
     display: flex;
   }
 
-  .Posts-forum-post > img {
-    align-self: flex-start;
+  .Posts-avatar-wrapper {
     margin-right: 10px;
+  }
+
+  .Posts-avatar-wrapper > img {
+    align-self: flex-start;
   }
 }
