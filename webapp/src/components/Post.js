@@ -1,5 +1,6 @@
 import React from 'react';
 import { withRouter } from "react-router";
+import { connect } from 'react-redux';
 import PostAPI from '../api/PostAPI';
 import CommentAPI from '../api/CommentAPI';
 import { Image, Item, Message } from 'semantic-ui-react'
@@ -99,10 +100,14 @@ class Post extends React.Component {
                   <p>{comment.text}</p>
                 </div>
               )}
-              <textarea className="Post-comment-textarea" name="comment" value={this.state.comment} onChange={this.onInputChange} />
-              <div className="Post-comment-button-wrapper">
-                <button disabled={this.state.creatingComment} className="Post-comment-button" onClick={this.onClickAddComment}>Add Comment</button>
-              </div>
+              {this.props.isAuthenticated &&
+                <>
+                  <textarea className="Post-comment-textarea" name="comment" value={this.state.comment} onChange={this.onInputChange} />
+                  <div className="Post-comment-button-wrapper">
+                    <button disabled={this.state.creatingComment} className="Post-comment-button" onClick={this.onClickAddComment}>Add Comment</button>
+                  </div>
+                </>
+              }
             </section>
           </div>
         }
@@ -111,4 +116,8 @@ class Post extends React.Component {
   }
 }
 
-export default withRouter(Post);
+function mapStateToProps(state, ownProps) {
+    return {...state.authentication};
+}
+
+export default withRouter(connect(mapStateToProps)(Post));
