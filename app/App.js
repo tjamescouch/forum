@@ -91,7 +91,7 @@ const App = () => {
             paddingBottom: 24,
             backgroundColor: isDarkMode ? Colors.black : Colors.white,
           }}>
-          
+
           {posts.map( post =>
             <Section key={post._id} title={post.title}>
               {post.body}

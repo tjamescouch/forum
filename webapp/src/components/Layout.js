@@ -1,10 +1,12 @@
 import NavBar from './NavBar'
 
+import './Layout.css'
+
 function Layout (props) {
   return (
-    <div className="App">
+    <div className="Layout">
       <NavBar />
-      <div className="App-content">  
+      <div className="Layout-content">
         {props.children}
       </div>
     </div>

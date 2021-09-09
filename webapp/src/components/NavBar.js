@@ -19,8 +19,8 @@ class NavBar extends React.Component {
 
   render() {
     return (
-      <header>
-        <ul className="NavBar">
+      <header className="NavBar">
+        <ul className="NavBar-ul">
           <li><Link className="NavBar-link home" to="/">Home</Link></li>
           {!this.props.isAuthenticated &&
             <li><Link className="NavBar-link" to="/login">Sign In</Link></li>
