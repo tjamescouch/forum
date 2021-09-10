@@ -18,7 +18,7 @@ function Posts ({isAuthenticated}) {
   }
 
   function onClickCancelPost() {
-    setShowPostModal(true);
+    setShowPostModal(false);
     setPost({title: '', body: ''});
   }
 
