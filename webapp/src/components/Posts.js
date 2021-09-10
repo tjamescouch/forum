@@ -1,115 +1,108 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import PostAPI from '../api/PostAPI';
 import { Image, Item, Button, Modal, Input, TextArea, Form, Loader } from 'semantic-ui-react'
 import { connect } from 'react-redux';
 import PostItem from './PostItem'
 import './Posts.css'
 
-class Posts extends React.Component {
+function Posts ({isAuthenticated}) {
 
-  constructor(props) {
-    super(props)
-    this.state = {posts:[],
-                  showPostModal:false,
-                  creatingPost: false,
-                  title: '',
-                  body: ''};
+  const [creatingPost, setCreatingPost] = useState(false);
+  const [showPostModal, setShowPostModal] = useState(false);
+  const [posts, setPosts] = useState([]);
+  const [post, setPost] = useState({title: '', body: ''});
 
-    this.onClickPost = this.onClickPost.bind(this);
-    this.onClickCancelPost = this.onClickCancelPost.bind(this);
-    this.onClickCreatePost = this.onClickCreatePost.bind(this);
-    this.onSubmitPost = this.onSubmitPost.bind(this);
-    this.onInputChange = this.onInputChange.bind(this);
+
+  function onClickPost() {
+    setShowPostModal(true);
   }
 
-  componentDidMount() {
-    this.loadData();
+  function onClickCancelPost() {
+    setShowPostModal(true);
+    setPost({title: '', body: ''});
   }
 
-  async loadData() {
-    try {
-      let posts = await PostAPI.getPosts();
-      this.setState({posts})
-    } catch (error) {
-      console.error(error);
-      alert('An error occurred');
-    }
-  }
-
-  onClickPost() {
-    this.setState({showPostModal:true});
-  }
-
-  onClickCancelPost() {
-    this.setState({showPostModal:false, title: '', body: ''});
-  }
-
-  async onClickCreatePost() {
-    this.setState({creatingPost:true});
-    try {
-      await PostAPI.createPost({title: this.state.title, body:this.state.body});
-    } catch (error) {
-      console.error(error);
-      alert('An error occurred');
-    }
-    this.setState({showPostModal:false, creatingPost: false, title: '', body: ''});
-    this.loadData();
-  }
-
-  onSubmitPost() {
-    this.onClickCreatePost();
-    return false;
-  }
-
-  onInputChange(event) {
+  function onInputChange(event) {
     const target = event.target;
     let value = target.value;
     let name = target.name;
-    this.setState({[name]: value});
+    setPost(prevPost => ({...prevPost, [name]: value}));
   }
 
-  render() {
-    return (
-      <div className='Posts'>
-        {this.props.isAuthenticated &&
-          <button className="Posts-post-button" onClick={this.onClickPost}>Post</button>
-        }
-        <div className="Posts-group">
-          {this.state.posts.map(post =>
-            <PostItem key={post._id} post={post} />
-          )}
-        </div>
+  async function onClickCreatePost() {
+    setCreatingPost(true);
+    try {
+      await PostAPI.createPost({title: post.title, body:post.body});
+    } catch (error) {
+      console.error(error);
+      alert('An error occurred');
+    }
+    setShowPostModal(false);
+    setCreatingPost(false);
+    setPost({title: '', body: ''});
+    loadData();
+  }
+
+  function onSubmitPost() {
+    onClickCreatePost();
+    return false;
+  }
+
+  async function loadData() {
+    try {
+      let posts = await PostAPI.getPosts();
+      setPosts(posts);
+    } catch (error) {
+      console.error(error);
+      alert('An error occurred');
+    }
+  }
+
+  useEffect(()=>{
+    loadData();
+  },[]);
 
 
-        <Modal open={this.state.showPostModal} onClose={this.onClickCancelPost}>
-          <Modal.Header>Create a Post</Modal.Header>
-          <Modal.Content>
-            <Form onSubmit={this.onSubmitPost} autoComplete="off">
-              <Form.Input name="title" label='Title' placeholder='Enter a title' value={this.state.title} onChange={this.onInputChange} />
-              <Form.TextArea name="body" label='Question' placeholder='Write a question' value={this.state.body} onChange={this.onInputChange} />
-            </Form>
-          </Modal.Content>
-          {this.state.creatingPost ?
-            <Loader active />
-            :
-            <Modal.Actions>
-              <Button color='black' onClick={this.onClickCancelPost}>
-                Cancel
-              </Button>
-              <Button
-                content="Create"
-                labelPosition='right'
-                icon='checkmark'
-                onClick={this.onClickCreatePost}
-                disabled={!this.state.title || !this.state.body}
-                positive
-              />
-            </Modal.Actions>
-          }
-          </Modal>
+  return (
+    <div className='Posts'>
+      {isAuthenticated &&
+        <button className="Posts-post-button" onClick={onClickPost}>Post</button>
+      }
+      <div className="Posts-group">
+        {posts.map(post =>
+          <PostItem key={post._id} post={post} />
+        )}
       </div>
-    );
-  }
+
+
+      <Modal open={showPostModal} onClose={onClickCancelPost}>
+        <Modal.Header>Create a Post</Modal.Header>
+        <Modal.Content>
+          <Form onSubmit={onSubmitPost} autoComplete="off">
+            <Form.Input name="title" label='Title' placeholder='Enter a title' value={post.title} onChange={onInputChange} />
+            <Form.TextArea name="body" label='Question' placeholder='Write a question' value={post.body} onChange={onInputChange} />
+          </Form>
+        </Modal.Content>
+        {creatingPost ?
+          <Loader active />
+          :
+          <Modal.Actions>
+            <Button color='black' onClick={onClickCancelPost}>
+              Cancel
+            </Button>
+            <Button
+              content="Create"
+              labelPosition='right'
+              icon='checkmark'
+              onClick={onClickCreatePost}
+              disabled={!post.title || !post.body}
+              positive
+            />
+          </Modal.Actions>
+        }
+        </Modal>
+    </div>
+  );
 }
 
 function mapStateToProps(state, ownProps) {
