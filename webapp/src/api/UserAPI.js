@@ -9,6 +9,11 @@ class UserAPI {
   signIn(credentials) {
     return APIUtils.postJson('/users/login', credentials);
   }
+
+
+  getSelf() {
+    return APIUtils.getJson('/users/me');
+  }
 }
 
 

@@ -5,6 +5,7 @@ import {Route, Redirect, withRouter } from 'react-router-dom';
 import Layout from './Layout';
 import SignUpContainer from './SignUpContainer';
 import SignInContainer from './SignInContainer';
+import Profile from './Profile';
 import Posts from './Posts';
 import Post from './Post';
 import PageNotFound from './PageNotFound';
@@ -24,6 +25,9 @@ class App extends React.Component {
           </Route>
           <Route path="/login">
             <SignInContainer />
+          </Route>
+          <Route path="/profile">
+            <Profile />
           </Route>
           <Route path="/post/:id">
             <Post />

@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const passport = require("passport");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
@@ -99,6 +100,18 @@ router.post("/", async function(req, res) {
   } catch (error) {
     console.error(error);
     throw error;
+  }
+});
+
+
+//Get your user object
+router.get('/me', passport.authenticate('jwt', { session: false }), async function(req, res) {
+  try{
+    let user = req.user;
+    res.status(200).json(user);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({message: "Server Error"});
   }
 });
 

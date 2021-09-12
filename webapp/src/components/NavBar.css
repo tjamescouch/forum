@@ -5,6 +5,7 @@
   background-color: #20232a;
   padding: 10px;
   margin: 0px;
+  z-index: 100;
 }
 
 .NavBar-ul {
