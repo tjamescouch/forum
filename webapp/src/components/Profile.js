@@ -35,11 +35,11 @@ function Posts ({isAuthenticated}) {
 
     if (file !== null) {
       setAvatar(URL.createObjectURL(file));
-    }
 
-    let data = new FormData();
-    data.append('file', file);
-    UserAPI.setAvatar(data);
+      let data = new FormData();
+      data.append('file', file);
+      UserAPI.setAvatar(data);
+    }
   }
 
   function onSelectAvatar() {
