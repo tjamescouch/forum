@@ -4,6 +4,7 @@ const passport = require("passport");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const multer  = require('multer');
+const path = require('path');
 
 const keys = require('../config/keys');
 const User = require('../models/schema/user').User;
@@ -17,14 +18,8 @@ const validateLoginData = require("../validation/login");
 const storage = multer.diskStorage({
   destination: './public/uploads/',
   filename: function (req, file, cb) {
-    let user = req.user;
-    if(!user) {
-      console.log('multer filename no user');
-      cb(new Error('Authentication required'));
-    } else {
-      console.log('multer filename ' + user._id);
-      cb(null, String(user._id));
-    }
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9) + path.extname(file.originalname);
+    cb(null, file.fieldname + '-' + uniqueSuffix)
   }
 });
 
@@ -136,8 +131,9 @@ router.get('/me', passport.authenticate('jwt', { session: false }), async functi
 //Get your user object
 router.post('/me/avatar', passport.authenticate('jwt', { session: false }), upload.single('file'), async function(req, res) {
   try{
-    console.log('me/avatar');
     let user = req.user;
+    user.avatar = req.file.filename;
+    await user.save();
     res.status(200).json(user);
   } catch (error) {
     console.error(error);

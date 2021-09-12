@@ -1,6 +1,7 @@
 import React from 'react';
 import { withRouter } from "react-router";
 import { connect } from 'react-redux';
+import { getUploadUrl } from '../api/APIUtils';
 import PostAPI from '../api/PostAPI';
 import CommentAPI from '../api/CommentAPI';
 import { Image, Item, Message } from 'semantic-ui-react'
@@ -82,7 +83,11 @@ class Post extends React.Component {
         {this.state.post &&
           <div>
             <div className="Post-avatar-wrapper">
-              <img src='/default-avatar.jpeg' />
+              {this.state.post && this.state.post.author && this.state.post.author.avatar ?
+                <img src={getUploadUrl(this.state.post.author.avatar)} />
+                :
+                <img src='/default-avatar.jpeg' />
+              }
               <p className="Post-avatar-name" >{this.state.post.author && this.state.post.author.name}</p>
             </div>
             <section>
@@ -94,7 +99,11 @@ class Post extends React.Component {
               {this.state.comments.map(comment =>
                 <div className="Post-comment-wrapper" key={comment._id}>
                   <div className="Post-comment-avatar-wrapper">
-                    <img src='/default-avatar.jpeg' />
+                    {comment.author && comment.author.avatar ?
+                      <img src={getUploadUrl(comment.author.avatar)} />
+                      :
+                      <img src='/default-avatar.jpeg' />
+                    }
                     <p className="Post-comment-avatar-name" >{comment.author && comment.author.name}</p>
                   </div>
                   <p>{comment.text}</p>
