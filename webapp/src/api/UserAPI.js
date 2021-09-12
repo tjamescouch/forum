@@ -10,9 +10,12 @@ class UserAPI {
     return APIUtils.postJson('/users/login', credentials);
   }
 
-
   getSelf() {
     return APIUtils.getJson('/users/me');
+  }
+
+  setAvatar(formData) {
+    return APIUtils.postFormData('/users/me/avatar', formData);
   }
 }
 
