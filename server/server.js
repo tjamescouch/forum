@@ -1,35 +1,40 @@
 
-const app = require('./app');
+const express = require('express');
+const app = express();
+const { ApolloServer } = require('apollo-server-express');
+const { ApolloServerPluginDrainHttpServer } = require('apollo-server-core');
 const http = require('http');
-const mongoose = require('mongoose');
+const typeDefs = require('./models/graphql/typedefs');
+const resolvers = require('./models/graphql/resolvers');
+const configureMongoose = require('./config/mongoose');
+const setupApp = require('./app');
 
-const keys = require('./config/keys');
+const HTTP_PORT = 5000;
 
-//Fixes deprecation warnings
-mongoose.set('useNewUrlParser', true);
-mongoose.set('useFindAndModify', false);
-mongoose.set('useCreateIndex', true);
-mongoose.set('useUnifiedTopology', true);
+async function startExpressAndApolloServers(app) {
+  const httpServer = http.createServer(app);
 
-mongoose.connect(keys.MongoURI)
-        .then(() => console.log("MongoDB connected"))
-        .catch(err => console.log(err));
+  const apolloServer = new ApolloServer({ typeDefs,
+                                          resolvers,
+                                          plugins: [ApolloServerPluginDrainHttpServer({ httpServer })]});
+  console.log('waiting on apollo');
+  await apolloServer.start();
+  apolloServer.applyMiddleware({ app, path: '/graphql' });
+  console.log('apolloServer.graphqlPath', apolloServer.graphqlPath);
 
+  setupApp(app);
 
-var port = 5000;
-app.set('port', port);
-
-
-var server = http.createServer(app);
-server.listen(port);
-server.on('listening', onListening);
-server.on('error', onError);
-
-function onListening() {
-  console.log(`Listening on port ${port}`);
+  httpServer.on('listening', () => {
+    console.log(`Listening on port ${HTTP_PORT}`);
+    console.log('GraphQL on', `http://localhost:${HTTP_PORT}${apolloServer.graphqlPath}`);
+  });
+  httpServer.on('error', e => {
+      console.error(e);
+  });
+  await httpServer.listen(HTTP_PORT);
 }
 
-function onError (e) {
- // Handle your error here
- console.error(e);
-}
+
+
+configureMongoose();
+startExpressAndApolloServers(app);
