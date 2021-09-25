@@ -1,5 +1,6 @@
 import React, {useState, useEffect, useRef} from 'react';
 import UserAPI from '../api/UserAPI';
+import { getUploadUrl } from '../api/APIUtils';
 import { connect } from 'react-redux';
 import './Profile.css'
 
@@ -17,6 +18,9 @@ function Posts ({isAuthenticated}) {
     try {
       let user = await UserAPI.getSelf();
       setUser(user);
+      if(user.avatar) {
+        setAvatar(getUploadUrl(user.avatar));
+      }
     } catch (error) {
       console.error(error);
       alert('An error occurred');
@@ -54,10 +58,8 @@ function Posts ({isAuthenticated}) {
           :
           <div class="avatar-placeholder" onClick={onSelectAvatar}>Select Avatar</div>
         }
-        <form method="post" encType="multipart/form-data" action="/upload">
-          <input ref={fileInput} style={{display: "none"}} type="file" name="file" accept="image/*" onChange={onChangeFile} />
-          <input ref={submitInput} style={{display: "none"}} type="submit" value="Submit" />
-        </form>
+        <input ref={fileInput} style={{display: "none"}} type="file" name="file" accept="image/*" onChange={onChangeFile} />
+
 
         <p>{user.name}</p>
         <p>{user.email}</p>

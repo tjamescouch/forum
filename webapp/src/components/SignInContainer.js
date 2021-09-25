@@ -51,7 +51,7 @@ class SignInContainer extends React.Component {
     } catch (error) {
       console.error(error);
       //FIXME - add better error handling here
-      this.setState({error: "Invalid username or password"});
+      this.setState({error: "Invalid username or password", password: ''});
     }
   }
 

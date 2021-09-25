@@ -95,7 +95,9 @@ class Post extends React.Component {
             <p>{this.state.post.body}</p>
             </section>
             <section>
-              <h3>Comments</h3>
+              {this.state.comments.length > 0 &&
+                <h3>Comments</h3>
+              }
               {this.state.comments.map(comment =>
                 <div className="Post-comment-wrapper" key={comment._id}>
                   <div className="Post-comment-avatar-wrapper">
