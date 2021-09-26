@@ -10,10 +10,10 @@ const resolvers = {
         throw new AuthenticationError('Unauthorized!')
       }
       //console.log('context.user', context.user);
-      return User.find().sort({date: -1});
+      return User.find().sort({date: -1}).exec();
     },
     getAllPosts: async (parent, args, context, info) => {
-      return Post.find().sort({date: -1});
+      return Post.find().sort({date: -1}).populate('author', '-password -email').exec();
     }
   },
 };
