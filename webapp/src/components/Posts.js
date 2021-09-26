@@ -2,14 +2,25 @@ import React, {useState, useEffect} from 'react';
 import PostAPI from '../api/PostAPI';
 import { Image, Item, Button, Modal, Input, TextArea, Form, Loader } from 'semantic-ui-react'
 import { connect } from 'react-redux';
+import { gql, useQuery } from '@apollo/client';
 import PostItem from './PostItem'
 import './Posts.css'
 
+const GET_POSTS = gql`
+  query {
+    getAllPosts {
+      _id
+      title
+      body
+    }
+  }
+`;
+
 function Posts ({isAuthenticated}) {
+  const { loading, error, data, refetch } = useQuery(GET_POSTS);
 
   const [creatingPost, setCreatingPost] = useState(false);
   const [showPostModal, setShowPostModal] = useState(false);
-  const [posts, setPosts] = useState([]);
   const [post, setPost] = useState({title: '', body: ''});
 
 
@@ -40,7 +51,7 @@ function Posts ({isAuthenticated}) {
     setShowPostModal(false);
     setCreatingPost(false);
     setPost({title: '', body: ''});
-    loadData();
+    refetch();
   }
 
   function onSubmitPost() {
@@ -48,19 +59,6 @@ function Posts ({isAuthenticated}) {
     return false;
   }
 
-  async function loadData() {
-    try {
-      let posts = await PostAPI.getPosts();
-      setPosts(posts);
-    } catch (error) {
-      console.error(error);
-      alert('An error occurred');
-    }
-  }
-
-  useEffect(()=>{
-    loadData();
-  },[]);
 
 
   return (
@@ -68,8 +66,9 @@ function Posts ({isAuthenticated}) {
       {isAuthenticated &&
         <button className="Posts-post-button" onClick={onClickPost}>Post</button>
       }
+
       <div className="Posts-group">
-        {posts.map(post =>
+        {data && data.getAllPosts.map(post =>
           <PostItem key={post._id} post={post} />
         )}
       </div>

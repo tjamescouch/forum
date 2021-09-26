@@ -1,5 +1,6 @@
 const { AuthenticationError } = require('apollo-server-express');
 const User = require('../schema/user').User;
+const Post = require('../schema/post').Post;
 
 const resolvers = {
   Query: {
@@ -8,13 +9,11 @@ const resolvers = {
       if (!context.user) {
         throw new AuthenticationError('Unauthorized!')
       }
-      try {
-        console.log('context.user', context.user);
-        return User.find().sort({date: -1});
-      } catch (e) {
-        console.error(e);
-      }
-      return [];
+      //console.log('context.user', context.user);
+      return User.find().sort({date: -1});
+    },
+    getAllPosts: async (parent, args, context, info) => {
+      return Post.find().sort({date: -1});
     }
   },
 };
